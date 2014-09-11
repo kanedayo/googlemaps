@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Mapsの練習</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=true&language=ja">
+  </script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <style>
+    html, body {
+      height:100%;
+    }
+    #map {
+      width: 100%;
+      height: 90%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <form>
+    <p>
+    <input type="button" id="btn" value="ダウンロード" onclick="downloadData()" />
+    </p>
+  </form>
+
+  <script>
+    
+    
+    var latlng = new google.maps.LatLng(41.791217,140.775032);
+    var options = {
+      zoom: 12,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById('map'),options);
+    
+    
+    //http://pinoyuki.hatenablog.com/entry/2012/03/26/011922
+    //jsonファイルの取得
+function downloadData() {
+    $.ajax({
+      url: 'data.json',
+      type: 'GET',
+      dataType: 'json',
+      timeout: 10000,
+      error: function(){
+        alert("地図データの読み込みに失敗しました");
+      },
+      success: function(json){
+        //帰ってきた地点の数だけループ
+        $.each(json.marker,function(){
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(this.lat,this.lng),
+            draggable: true,
+            title: this.title,
+            map: map
+          });
+
+        });
+
+      }
+
+    });
+} 
+    function createMarker(lat, lng, name) {
+      var marker = new google.maps.LatLng(lat, lng);
+
+      var html = "<p>" + name + "</p>";
+      google.maps.event.addListener(marker, "click", function(){
+        marker.openInfoWindowHtml(html);
+      });
+
+      return marker;
+    }
+
+  </script>
+</body>
+</html>

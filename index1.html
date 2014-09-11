@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Mapsの練習</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=true&language=ja">
+  </script>
+  <style>
+    html, body {
+      height:100%;
+    }
+    #map {
+      width: 100%;
+      height:100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+//  var latlng = new google.maps.LatLng(35.66, 139.69);
+//  var options = {
+//   zoom: 15,
+//   center: latlng,
+//   //disableDefaultUI: true,
+//   //panControl: false,
+//   //zoomControl: false,
+//   //scaleControl: false,
+//
+//   mapTypeId: google.maps.MapTypeId.ROADMAP
+//   //mapTypeId: google.maps.MapTypeId.SATELLITE
+//   //mapTypeId: google.maps.MapTypeId.TERRAIN
+//   //mapTypeId: google.maps.MapTypeId.HYBRID
+//   };
+//   var map = new google.maps.Map(document.getElementById('map'), options);
+//
+//   // #04 : 中央にマーカーを立てる。
+//   var marker = new google.maps.Marker({
+//     position: map.getCenter(),
+//     map: map
+//   });
+//
+//   // #05 : click位置にマーカーを立てる。
+//   // #06 : マーカーのオプションを変更
+//   google.maps.event.addListener(map, 'click', function(event){
+//     var marker = new google.maps.Marker({
+//       position: event.latLng,
+//       draggable: true,
+//       icon: new google.maps.MarkerImage('taxi-64.png'),
+//       title: 'マーカー',
+//       map: map
+//     });
+//   });
+//
+//   // #07 : 情報ウインドウの情事
+//   var infoWindow = new google.maps.InfoWindow({
+//     content: '<strong>渋谷のあたりだよ</strong>だよ!',
+//     position: map.getCenter()
+//   });
+//   infoWindow.open(map);
+//
+//   // #08 : マーカーと情報ウィンドウの連動
+//   google.maps.event.addListener(marker, 'click', function() {
+//     infoWindow.open(map,marker);
+//   });
+
+   // #09 : Geocoding : 住所->緯度経度
+   // #10 : Geocoding : 住所->緯度経度
+//   var geocoder = new google.maps.Geocoder();
+//   geocoder.geocode({
+//     'address': '沖縄県那覇市'
+//   }, function(result, status) {
+//     if(status == google.maps.GeocoderStatus.OK) {
+//       var latlng = result[0].geometry.location;
+//       var options = {
+//         zoom: 15,
+//         center: latlng,
+//         mapTypeId: google.maps.MapTypeId.ROADMAP
+//       };
+//       var map = new google.maps.Map(document.getElementById('map'),options);
+//     } else {
+//       alert('エラーです！');
+//     }
+//   });
+
+   // #11,12,13 : クリック位置の住所表示
+   var geocoder = new google.maps.Geocoder();
+   geocoder.geocode({
+     'address': '沖縄県那覇市'
+   }, function(result, status) {
+     if(status == google.maps.GeocoderStatus.OK) {
+       var latlng = result[0].geometry.location;
+       var options = {
+         zoom: 15,
+         center: latlng,
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
+       var map = new google.maps.Map(document.getElementById('map'),options);
+       google.maps.event.addListener(map,'click',function(event){
+         var marker = new google.maps.Marker({
+           position: event.latLng,
+           map: map
+         });
+         geocoder.geocode({
+           'latLng': event.latLng
+         },function(result,status){
+           if (status == google.maps.GeocoderStatus.OK){
+             var infoWindow = new google.maps.InfoWindow({
+               content: result[0].formatted_address
+             });
+             infoWindow.open(map,marker);
+           } else {
+             alert('エラーです！');
+           }
+         });
+       });
+     } else {
+       alert('エラーです！');
+     }
+   });
+
+
+  </script>
+</body>
+</html>
