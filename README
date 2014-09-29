@@ -13,6 +13,9 @@ https://github.com/pinoyuki/Sample-of-study/tree/master/GoogleMap/Sample3
 
 [参考]GoogleMapsAPIを利用したサービスなど
 http://www.ubilabs.net/
+https://foursquare.com/
+http://photoll.jp/
+http://tabelog.com/map/
 
 https://loc.alize.us/
 位置情報とリスト表示など
@@ -20,7 +23,15 @@ https://loc.alize.us/
 http://bit-taming.com/content/projects/new_york/
 検索窓など
 
+
+http://www.sitepoint.com/use-google-maps-rails/
+Leaflet.jsの紹介など
+
+
 Googleマップへようこそ
 https://www.google.com/maps/about/
 https://www.google.com/maps/views/
 自分自身のストリートビューを作成など
+
+矩形検索[groonga/rroonga/mroonga]
+http://gihyo.jp/dev/clip/01/groonga/0002
